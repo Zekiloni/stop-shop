@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ShopService} from '../../core/shop.service';
-import {Product} from '../../core/shop.model';
+import {Product, Review} from '../../core/shop.model';
 import {ActivatedRoute} from '@angular/router';
 import {Ripple} from 'primeng/ripple';
 import {ButtonDirective} from 'primeng/button';
@@ -14,6 +14,7 @@ import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {ChipModule} from 'primeng/chip';
 import {DatePipe} from '@angular/common';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @Component({
   standalone: true,
@@ -29,6 +30,7 @@ import {DatePipe} from '@angular/common';
     ToastModule,
     ChipModule,
     DatePipe,
+    InputTextareaModule,
   ],
   providers: [ShopService, MessageService],
   templateUrl: './single-product-page.component.html',
@@ -36,6 +38,13 @@ import {DatePipe} from '@angular/common';
 })
 export class SingleProductPageComponent {
   protected readonly getProductThumbnail = getProductThumbnail;
+
+  newReview: Review = {
+    username: '',
+    comment: '',
+    rating: 0,
+    date: new Date(),
+  }
 
   product!: Product;
   averageRating: number = 0;
@@ -51,5 +60,17 @@ export class SingleProductPageComponent {
   addToCart(product: Product) {
     this.messageService.add({severity: 'success', summary: 'Uspešno', detail: 'Dodałi ste proizvod u korpu'});
     this.shopService.addToCart(product)
+  }
+
+  submitRating() {
+    this.newReview.date = new Date();
+    console.log(this.newReview.rating)
+    const review = {...this.newReview};
+    this.product.reviews?.push(review);
+
+    this.averageRating = getAverageRating(this.product);
+    this.newReview.username = '';
+    this.newReview.comment = '';
+    this.newReview.rating = 0;
   }
 }

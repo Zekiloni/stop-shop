@@ -21,7 +21,8 @@
         <div class="flex align-items-center justify-content-between mb-5"><span
           class="text-900 font-medium text-3xl block">${{ product.price }}</span>
           <div class="flex align-items-center">
-            <p-rating [(ngModel)]="averageRating" iconOnClass="pi pi-star-fill text-yellow-500" [readonly]="true" [cancel]="false"/>
+            <p-rating [(ngModel)]="averageRating" iconOnClass="pi pi-star-fill text-yellow-500" [readonly]="true"
+                      [cancel]="false"/>
             <span class="text-sm"><b class="text-900 ml-2 mr-1">{{ product.reviews ? product.reviews.length : 0 }}</b>
               <span class="text-500"></span>ocena
             </span>
@@ -89,7 +90,8 @@
                     class="text-500 font-medium text-sm">{{ review.date | date }}</span></div>
                 </div>
                 <div class="flex align-items-center"><span class="mr-2">
-                  <p-rating [(ngModel)]="review.rating" iconOnClass="pi pi-star-fill text-yellow-500" [readonly]="true" [cancel]="false"/>
+                  <p-rating [(ngModel)]="review.rating" iconOnClass="pi pi-star-fill text-yellow-500" [readonly]="true"
+                            [cancel]="false"/>
                 </span>
                   <span class="font-medium">{{ review.rating }}</span></div>
               </div>
@@ -99,6 +101,27 @@
             </li>
           }
         </ul>
+
+        <div class="grid formgrid p-fluid">
+          <h2 class="col-12">Nova recenzija</h2>
+          <div class="field mb-4 col-12 md:col-6">
+            <label for="username" class="font-medium text-900">Korisničko ime</label>
+            <input id="username" type="text" [(ngModel)]="newReview.username" pInputText>
+          </div>
+          <div class="field mb-4 col-12">
+            <label for="rating" class="font-medium text-900">Ocena</label>
+            <p-rating class="block" [(ngModel)]="newReview.rating" iconOnClass="pi pi-star-fill text-yellow-500"
+                      [cancel]="false"
+                      id="rating"></p-rating>
+          </div>
+          <div class="field mb-4 col-12">
+            <label for="comment" class="font-medium text-900">Komentar</label>
+            <textarea pInputTextarea [(ngModel)]="newReview.comment" id="comment"></textarea>
+          </div>
+          <div class="field mb-4 col-12">
+            <button pButton (click)="submitRating()" label="Dodaj recenziju"></button>
+          </div>
+        </div>
       </p-tabPanel>
       <p-tabPanel header="Dostava i Povraćaj">
         <div class="p-3">
