@@ -3,7 +3,6 @@ import {ShopService} from '../../core/shop.service';
 import {Product} from '../../core/shop.model';
 import {ButtonDirective} from 'primeng/button';
 import {Ripple} from 'primeng/ripple';
-import {AsyncPipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';

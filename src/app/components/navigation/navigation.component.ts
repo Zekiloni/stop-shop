@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Ripple} from 'primeng/ripple';
 import {StyleClassModule} from 'primeng/styleclass';
 import {BadgeModule} from 'primeng/badge';

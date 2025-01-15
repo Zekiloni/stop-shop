@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SingleProductPageComponent } from './single-product-page.component';
+import {SingleProductPageComponent} from './single-product-page.component';
 
 describe('SingleProductPageComponent', () => {
   let component: SingleProductPageComponent;
