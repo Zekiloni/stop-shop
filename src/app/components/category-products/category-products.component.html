@@ -1,0 +1,25 @@
+<div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+  <div class="text-900 font-medium text-4xl mb-4">Popularni Proizvodi</div>
+  <div class="grid -mt-3 -ml-3 -mr-3">
+
+    @for (product of products; track product.id) {
+      <div class="col-12 md:col-6 lg:col-3 mb-3 lg:mb-0 cursor-pointer hover:surface-100 transition-colors transition-duration-300">
+        <div class="p-2">
+          <div class="relative" (click)="openProduct(product)">
+            <img [src]="getProductThumbnail(product)" class="w-full" alt="product-image">
+            <button type="reset" pRipple
+                    class="p-link w-3rem h-3rem surface-0 hover:surface-200 border-circle shadow-2 inline-flex align-items-center justify-content-center absolute transition-colors transition-duration-300"
+                    style="top: 1rem; right: 1rem;">
+              <i class="pi pi-heart text-2xl text-500"></i>
+              <span class="p-ink" style="height: 48px; width: 48px; top: -5.84941px; left: -9.01135px;"></span>
+            </button>
+          </div>
+          <div class="flex align-items-center justify-content-between mt-3 mb-2">
+            <span class="text-900 font-medium text-xl">{{ product.name }}</span>
+            <span class="text-900 text-xl ml-3">${{ product.price }}</span></div>
+          <span class="text-600">{{ product.description }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>
