@@ -3,6 +3,7 @@ import {Ripple} from 'primeng/ripple';
 import {ShopService} from '../../core/shop.service';
 import {Product} from '../../core/shop.model';
 import {Router} from '@angular/router';
+import {getProductThumbnail} from '../../core/shop.util';
 
 @Component({
   standalone: true,
@@ -15,14 +16,12 @@ import {Router} from '@angular/router';
   styleUrl: './category-products.component.css'
 })
 export class CategoryProductsComponent {
+  getProductThumbnail = getProductThumbnail;
+
   products!: Product[];
 
   constructor(private shopService: ShopService, private router: Router) {
     this.products = this.shopService.getAllProducts();
-  }
-
-  getProductThumbnail(product: Product): string {
-    return product.images[0];
   }
 
   openProduct(product: Product) {

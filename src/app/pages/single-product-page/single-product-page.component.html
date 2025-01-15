@@ -1,3 +1,9 @@
+@if (product) {
+  {{ product | json }}
+
+  <button pRipple pButton label="Add to Cart" class="p-element p-ripple p-button p-component" (click)="addToCart(product)"></button>
+}
+
 <!--<div class="surface-section px-4 md:px-6 lg:px-8">-->
 <!--  <ul-->
 <!--    class="list-none py-3 px-0 m-0 border-y-1 surface-border flex flex-wrap align-items-center font-medium overflow-x-auto">-->
