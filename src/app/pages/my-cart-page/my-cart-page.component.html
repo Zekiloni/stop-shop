@@ -1,12 +1,15 @@
-<div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-  <div class="flex flex-column align-items-center mb-6">
-    <div class="text-900 text-4xl mb-4 font-medium">Vaš račun iznosi ${{ total }}</div>
-    <p class="text-600 font-medium text-xl mt-0 mb-4">BESPLATNA DOSTAVA I REFUNDACIJA</p>
-    <button pButton pRipple label="Plaćanje"></button>
-  </div>
-  <ul class="list-none p-0 m-0">
 
-    @if (products$ | async; as products) {
+@if (products.length) {
+  <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+    <div class="flex flex-column align-items-center mb-6">
+      <div class="text-900 text-4xl mb-4 font-medium">Vaš račun iznosi ${{ (total + fee).toFixed(2) }}</div>
+      <p class="text-600 font-medium text-xl mt-0 mb-4">BESPLATNA DOSTAVA I REFUNDACIJA</p>
+      <button pButton pRipple label="Plati" (click)="checkout()"></button>
+    </div>
+
+    <button pButton pRipple label="Isprazni korpu" (click)="clearCart()" class="mb-6"></button>
+
+    <ul class="list-none p-0 m-0">
       @for (product of products; track product.id) {
         <li class="flex flex-column md:flex-row py-6 border-top-1 border-bottom-1 surface-border md:align-items-center">
           <div class="flex-auto py-5 md:pl-5">
@@ -17,32 +20,41 @@
                 <span class="text-600">{{ product.description }}</span>
               </div>
               <div class="w-full sm:w-6 flex align-items-end justify-content-between mt-3 sm:mt-0">
-                <div class="flex flex-column sm:align-items-end"><span class="text-900 text-2xl font-medium mb-2 sm:mb-3">${{ product.price }}</span>
-                  <a tabindex="0"
-                     class="cursor-pointer text-pink-500 font-medium hover:text-pink-600 transition-colors transition-duration-300">Remove</a>
+                <div class="flex w-full flex-column sm:align-items-end"><span
+                  class="text-900 text-2xl font-medium mb-2 sm:mb-3">${{ product.price }}</span>
+                  <button pButton severity="danger" [outlined]="true" icon="pi pi-trash" label="Izbriši" (click)="removeFromCart(product)"></button>
                 </div>
               </div>
             </div>
           </div>
         </li>
       }
-    }
 
-  </ul>
-  <div class="flex">
-    <ul class="list-none py-0 pr-0 pl-0 md:pl-5 mt-6 mx-0 mb-0 flex-auto">
-      <li class="flex justify-content-between mb-4"><span class="text-xl text-900">Subtotal</span><span
-        class="text-xl text-900">$82.00</span></li>
-      <li class="flex justify-content-between mb-4"><span class="text-xl text-900">Dostava</span><span
-        class="text-xl text-900">Free</span></li>
-      <li class="flex justify-content-between mb-4"><span class="text-xl text-900">Porez</span><span
-        class="text-xl text-900">$8.00</span></li>
-      <li class="flex justify-content-between border-top-1 surface-border mb-4 pt-4"><span
-        class="text-xl text-900 font-bold text-3xl">Ukupno</span><span
-        class="text-xl text-900 font-bold text-3xl">${{ total }}</span></li>
-      <li class="flex justify-content-end">
-        <button pButton pRipple label="Check Out"></button>
-      </li>
     </ul>
+    <div class="flex">
+      <ul class="list-none py-0 pr-0 pl-0 md:pl-5 mt-6 mx-0 mb-0 flex-auto">
+        <li class="flex justify-content-between mb-4"><span class="text-xl text-900">Iznos pre poreza</span><span
+          class="text-xl text-900">${{ total }}</span></li>
+        <li class="flex justify-content-between mb-4"><span class="text-xl text-900">Dostava</span><span
+          class="text-xl text-900">Besplatna</span></li>
+        <li class="flex justify-content-between mb-4"><span class="text-xl text-900">Porez</span><span
+          class="text-xl text-900">${{ fee }}</span></li>
+        <li class="flex justify-content-between border-top-1 surface-border mb-4 pt-4"><span
+          class="text-xl text-900 font-bold text-3xl">Ukupno</span><span
+          class="text-xl text-900 font-bold text-3xl">${{ (total + fee).toFixed(2) }}</span></li>
+        <li class="flex justify-content-end">
+          <button pButton pRipple label="Plati" (click)="checkout()"></button>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
+
+} @else {
+  <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+    <div class="text-900 text-4xl mb-4 font-medium">Vaša korpa je prazna</div>
+    <p class="text-600 font-medium text-xl mt-0 mb-4">Pogledajte našu ponudu i dodajte proizvode u korpu</p>
+    <a pButton pRipple label="Pogledajte proizvode" routerLink="" class="no-underline"></a>
+  </div>
+}
+
+<p-toast></p-toast>

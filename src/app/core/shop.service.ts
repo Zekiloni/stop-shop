@@ -1,12 +1,20 @@
 import {Injectable} from '@angular/core';
 import {products} from './shop.data';
-import {BehaviorSubject} from 'rxjs';
 import {Product} from './shop.model';
 
 @Injectable()
 export class ShopService {
-  private cartSubject = new BehaviorSubject<Product[]>([]);
-  cart$ = this.cartSubject.asObservable();
+  public static CHECKOUT_ENDPOINT = 'https://www.paypal.me/zekiloni';
+  public static TAX_FEE = 8.00;
+
+  get cart(): Product[] {
+    const storedCart = localStorage.getItem('cart');
+    return storedCart ? JSON.parse(storedCart) as Product[] : []; // Check for null
+  }
+
+  set cart(value: Product[]) {
+    localStorage.setItem('cart', JSON.stringify(value));
+  }
 
   getAllProducts() {
     return products;
@@ -16,26 +24,19 @@ export class ShopService {
     return products.find(product => product.id === id);
   }
 
-
   addToCart(product: Product) {
-    const currentCart = this.cartSubject.getValue();
-    this.cartSubject.next([...currentCart, product]);
+    this.cart = [...this.cart, product];
   }
 
   removeFromCart(productId: string) {
-    const updatedCart = this.cartSubject.getValue().filter(product => product.id !== productId);
-    this.cartSubject.next(updatedCart);
+    this.cart = this.cart.filter(product => product.id !== productId);
   }
 
   clearCart() {
-    this.cartSubject.next([]);
-  }
-
-  getCartItems() {
-    return this.cartSubject.getValue();
+    this.cart = [];
   }
 
   getCartTotal() {
-    return this.cartSubject.getValue().reduce((total, product) => total + product.price, 0);
+    return this.cart.reduce((total, product) => total + product.price, 0);
   }
 }

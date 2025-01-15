@@ -3,7 +3,8 @@
   <div class="grid -mt-3 -ml-3 -mr-3">
 
     @for (product of products; track product.id) {
-      <div class="col-12 md:col-6 lg:col-3 mb-3 lg:mb-0 cursor-pointer hover:surface-100 transition-colors transition-duration-300">
+      <div
+        class="col-12 md:col-6 lg:col-3 mb-3 lg:mb-0 cursor-pointer hover:surface-100 transition-colors transition-duration-300">
         <div class="p-2">
           <div class="relative" (click)="openProduct(product)">
             <img [src]="getProductThumbnail(product)" class="w-full" alt="product-image">
@@ -16,10 +17,16 @@
           </div>
           <div class="flex align-items-center justify-content-between mt-3 mb-2">
             <span class="text-900 font-medium text-xl">{{ product.name }}</span>
-            <span class="text-900 text-xl ml-3">${{ product.price }}</span></div>
+            <span class="text-900 text-xl ml-3">${{ product.price }}</span>
+          </div>
           <span class="text-600">{{ product.description }}</span>
+
+          <button pButton severity="primary" label="Dodaj u korpu" class="w-full mt-3"
+                  (click)="addToCart(product)"></button>
         </div>
       </div>
     }
   </div>
 </div>
+
+<p-toast></p-toast>
